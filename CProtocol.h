@@ -6,11 +6,11 @@
 
 typedef enum ELayer
 {
-    PHYSICAL = 0,
-    LINK,
-    INTERNET,
-    TRANSPORT,
-    APPLICATION
+    PHYSICAL = 5,
+    LINK = 4,
+    INTERNET = 3,
+    TRANSPORT = 2,
+    APPLICATION = 1
 } Elayer;
 
 class CProtocol : public QPushButton
@@ -18,7 +18,7 @@ class CProtocol : public QPushButton
 public:
     CProtocol(QGroupBox *);
     CProtocol();
-private:
+
     Elayer layer;
     // TODO: add Scapy reference
 

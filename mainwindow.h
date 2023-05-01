@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QLocale>
 #include <QTranslator>
+#include <QGridLayout>
 
 #include "CProtocol.h"
 
@@ -33,8 +34,15 @@ private slots:
 
     void clickedPacketProto();
 
+    void on_pushButton_14_clicked();
+
+    void on_pushButton_10_clicked();
+
+    void on_pushButton_8_clicked();
+
 private:
     Ui::MainWindow *ui;
     QTranslator translator;
+    QGridLayout *layer_groups[5];
 };
 #endif // MAINWINDOW_H

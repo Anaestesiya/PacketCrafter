@@ -1,9 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
 #include <QRect>
 #include <QMessageBox>
-
+#include <QProcess>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -100,18 +99,6 @@ void MainWindow::addProtoAction(CProtocol *proto)
     packetproto->show();
 }
 
-// PPP
-void MainWindow::on_pushButton_13_clicked()
-{
-    addProtoAction(ui->pushButton_13);
-}
-
-// HTTP
-void MainWindow::on_pushButton_5_clicked()
-{
-    addProtoAction(ui->pushButton_5);
-}
-
 void MainWindow::clickedPacketProto()
 {
     qDebug() << ((CProtocol *)sender())->layer;
@@ -132,15 +119,88 @@ void MainWindow::on_pushButton_14_clicked()
     addProtoAction(ui->pushButton_14);
 }
 
+// PPP
+void MainWindow::on_pushButton_13_clicked()
+{
+    addProtoAction(ui->pushButton_13);
+}
+
+// ARP
+void MainWindow::on_pushButton_11_clicked()
+{
+    addProtoAction(ui->pushButton_11);
+}
+
 // IPv4
 void MainWindow::on_pushButton_10_clicked()
 {
     addProtoAction(ui->pushButton_10);
 }
 
+// IPv6
+void MainWindow::on_pushButton_15_clicked()
+{
+    addProtoAction(ui->pushButton_15);
+}
+
+// ICMP
+void MainWindow::on_pushButton_12_clicked()
+{
+    addProtoAction(ui->pushButton_12);
+}
+
+// ICMPv6
+void MainWindow::on_pushButton_16_clicked()
+{
+    addProtoAction(ui->pushButton_16);
+}
+
+
 // TCP
 void MainWindow::on_pushButton_8_clicked()
 {
     addProtoAction(ui->pushButton_8);
+}
+
+// UDP
+void MainWindow::on_pushButton_9_clicked()
+{
+    addProtoAction(ui->pushButton_9);
+}
+
+/*
+ *     QProcess process;
+    process.start("/home/anastasiiafrolova/send_ssdp.py");
+    process.waitForFinished();
+
+    QString output(process.readAllStandardOutput());
+    qDebug()<<output;
+
+    QString err(process.readAllStandardError());
+    qDebug()<<err;
+*/
+
+// HTTP
+void MainWindow::on_pushButton_5_clicked()
+{
+    addProtoAction(ui->pushButton_5);
+}
+
+// FTP
+void MainWindow::on_pushButton_7_clicked()
+{
+    addProtoAction(ui->pushButton_7);
+}
+
+// DNS
+void MainWindow::on_pushButton_6_clicked()
+{
+    addProtoAction(ui->pushButton_6);
+}
+
+// DHCP
+void MainWindow::on_pushButton_17_clicked()
+{
+    addProtoAction(ui->pushButton_17);
 }
 

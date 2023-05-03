@@ -405,6 +405,9 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="styleSheet">
+         <string notr="true">QLabel { color : black; font-size : 10; }</string>
+        </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
         </property>

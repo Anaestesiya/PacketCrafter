@@ -11,11 +11,13 @@ CONFIG += c++17
 SOURCES += \
     CProtocol.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    protoFields/etherfields.cpp
 
 HEADERS += \
     CProtocol.h \
-    mainwindow.h
+    mainwindow.h \
+    protoFields/etherfields.h
 
 FORMS += \
     mainwindow.ui
@@ -29,3 +31,7 @@ CONFIG += embed_translations
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+#INCLUDEPATH += /usr/include/python3.8
+#LIBS += -L/usr/lib/python3.8/config-3.8-x86_64-linux-gnu
+#LIBS += -L/usr/lib -lpython3.8 -lcrypt -lpthread -ldl  -lutil -lm -lm

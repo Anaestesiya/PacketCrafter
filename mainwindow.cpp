@@ -1,8 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <QRect>
-#include <QMessageBox>
+
 #include <QProcess>
+#include "protoFields/etherfields.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -67,6 +67,7 @@ void MainWindow::on_pushButton_set_EN_clicked()
 
 void MainWindow::addProtoAction(CProtocol *proto)
 {
+    // Init widget
     CProtocol *packetproto = new CProtocol();
     packetproto->setGeometry(proto->geometry());
     packetproto->setText(proto->text());
@@ -75,6 +76,8 @@ void MainWindow::addProtoAction(CProtocol *proto)
     packetproto->setMinimumHeight(75);
     connect(packetproto, SIGNAL(clicked()),this, SLOT(clickedPacketProto()));
 
+
+    // Filter alogorithm
     QGridLayout *grp = (QGridLayout *)proto->parentWidget()->layout();
 
     for (int i = 0; i < grp->count(); ++i)
@@ -97,8 +100,12 @@ void MainWindow::addProtoAction(CProtocol *proto)
     ui->verticalLayout_packet->setAlignment(Qt::AlignCenter);
 
     packetproto->show();
+
+    // Init custom fileds layout
+
 }
 
+// Remove widget from Packet layout when clicked
 void MainWindow::clickedPacketProto()
 {
     qDebug() << ((CProtocol *)sender())->layer;
@@ -117,6 +124,7 @@ void MainWindow::clickedPacketProto()
 void MainWindow::on_pushButton_14_clicked()
 {
     addProtoAction(ui->pushButton_14);
+    new CEtherFields(ui->verticalLayout_fields);
 }
 
 // PPP

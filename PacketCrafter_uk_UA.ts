@@ -63,57 +63,73 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="193"/>
+        <location filename="mainwindow.ui" line="196"/>
+        <source>DHCP</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="206"/>
         <source>Transport layer</source>
         <translation>Транспортний рівень</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="205"/>
+        <location filename="mainwindow.ui" line="218"/>
         <source>TCP</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="218"/>
+        <location filename="mainwindow.ui" line="231"/>
         <source>UDP</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="228"/>
+        <location filename="mainwindow.ui" line="241"/>
         <source>Internet layer</source>
         <translation>Інтернет рівень</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="240"/>
+        <location filename="mainwindow.ui" line="266"/>
         <source>ICMP</source>
         <translation></translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="253"/>
-        <source>IP</source>
+        <source>IPv4</source>
+        <oldsource>IP</oldsource>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="266"/>
+        <location filename="mainwindow.ui" line="327"/>
         <source>ARP</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="276"/>
+        <location filename="mainwindow.ui" line="302"/>
         <source>Link layer</source>
         <translation>Канальний рівень</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="288"/>
+        <location filename="mainwindow.ui" line="279"/>
+        <source>IPv6</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="292"/>
+        <source>ICMPv6</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="314"/>
         <source>PPP</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="298"/>
+        <location filename="mainwindow.ui" line="337"/>
         <source>Physical leyer</source>
         <translation>Фізичний рівень</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="310"/>
+        <location filename="mainwindow.ui" line="349"/>
         <source>Ethernet</source>
         <translation></translation>
     </message>

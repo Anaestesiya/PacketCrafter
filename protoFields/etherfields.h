@@ -7,18 +7,20 @@
 #include <QLineEdit>
 #include <QVBoxLayout>
 
+#include "cfields.h"
+
 #define ETHER_FORMAT "ether=Ether(src='%s', dst='%s', type=%d)"
 
-class CEtherFields
+class CEtherFields : public CFields
 {
 public:
     QLineEdit src;
     QLineEdit dst;
 
-    QGroupBox grpbox;
-
     CEtherFields(QVBoxLayout *parentFrame);
-    ~CEtherFields(){}
+    virtual ~CEtherFields(){}
+
+    virtual void format(){}
 };
 
 #endif // CETHERFIELDS_H

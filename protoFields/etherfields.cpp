@@ -4,7 +4,7 @@
 
 // How to fill with default values ?
 
-CEtherFields::CEtherFields(QVBoxLayout *parentFrame)
+CEtherFields::CEtherFields(QVBoxLayout *parentFrame) : CFields()
 {
     QGridLayout * grd = new QGridLayout();
     grpbox.setLayout(grd);

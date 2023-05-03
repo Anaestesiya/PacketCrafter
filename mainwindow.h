@@ -7,7 +7,7 @@
 #include <QGridLayout>
 
 #include "CProtocol.h"
-
+#include "protoFields/cfields.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -21,7 +21,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void addProtoAction(CProtocol *proto);
+    void addProtoAction(CProtocol *proto, CFields *fields = nullptr);
 
 private slots:
     void on_pushButton_set_UA_clicked();

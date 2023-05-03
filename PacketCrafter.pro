@@ -12,11 +12,13 @@ SOURCES += \
     CProtocol.cpp \
     main.cpp \
     mainwindow.cpp \
+    protoFields/cfields.cpp \
     protoFields/etherfields.cpp
 
 HEADERS += \
     CProtocol.h \
     mainwindow.h \
+    protoFields/cfields.h \
     protoFields/etherfields.h
 
 FORMS += \

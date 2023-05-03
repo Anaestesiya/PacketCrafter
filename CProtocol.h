@@ -4,6 +4,8 @@
 #include <QPushButton>
 #include <QGroupBox>
 
+#include "protoFields/cfields.h"
+
 typedef enum ELayer
 {
     PHYSICAL = 5,
@@ -20,6 +22,7 @@ public:
     CProtocol();
 
     Elayer layer;
+    CFields *fields;
     // TODO: add Scapy reference
 
 };

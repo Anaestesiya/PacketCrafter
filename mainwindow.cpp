@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include <QProcess>
+//#include <QProcess>
 #include "protoFields/etherfields.h"
 
 MainWindow::MainWindow(QWidget *parent)
@@ -65,10 +65,11 @@ void MainWindow::on_pushButton_set_EN_clicked()
     ui->retranslateUi(this);
 }
 
-void MainWindow::addProtoAction(CProtocol *proto)
+void MainWindow::addProtoAction(CProtocol *proto, CFields *fields)
 {
     // Init widget
     CProtocol *packetproto = new CProtocol();
+    packetproto->fields = fields;
     packetproto->setGeometry(proto->geometry());
     packetproto->setText(proto->text());
     packetproto->layer = proto->layer;
@@ -117,14 +118,20 @@ void MainWindow::clickedPacketProto()
 
     ((CProtocol*)sender())->hide();
     ui->verticalLayout_packet->removeWidget((CProtocol*)sender());
+
+    if (((CProtocol *)sender())->fields != nullptr)
+    {
+        ((CProtocol *)sender())->fields->grpbox.hide();
+        ui->verticalLayout_fields->removeWidget(&((CProtocol *)sender())->fields->grpbox);
+        delete ((CProtocol *)sender())->fields;
+    }
     delete sender();
 }
 
 // Ethernet
 void MainWindow::on_pushButton_14_clicked()
 {
-    addProtoAction(ui->pushButton_14);
-    new CEtherFields(ui->verticalLayout_fields);
+    addProtoAction(ui->pushButton_14, new CEtherFields(ui->verticalLayout_fields));
 }
 
 // PPP

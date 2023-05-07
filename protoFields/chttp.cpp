@@ -22,7 +22,6 @@ Chttp::Chttp(QVBoxLayout *parentFrame) : CFields()
     grd->addWidget(new QLabel("Cache:"), 3, 0, Qt::AlignLeft);
     grd->addWidget(&cacheControl, 3, 1, Qt::AlignLeft);
 
-    parentFrame->insertWidget(0, &grpbox);
     parentFrame->setAlignment(Qt::AlignCenter);
     grpbox.show();
 }

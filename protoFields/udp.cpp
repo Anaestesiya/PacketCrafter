@@ -10,7 +10,6 @@ CUDP::CUDP(QVBoxLayout *parentFrame) : CFields()
 
     grpbox.setTitle("UDP");
 
-    parentFrame->insertWidget(0, &grpbox);
     parentFrame->setAlignment(Qt::AlignCenter);
     grpbox.show();
 }

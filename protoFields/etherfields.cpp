@@ -18,7 +18,6 @@ CEtherFields::CEtherFields(QVBoxLayout *parentFrame) : CFields()
     grd->addWidget(&dstMac, 1, 1, Qt::AlignLeft);
     grpbox.setTitle("Ethernet");
 
-    parentFrame->insertWidget(0, &grpbox);
     parentFrame->setAlignment(Qt::AlignCenter);
     grpbox.show();
 }

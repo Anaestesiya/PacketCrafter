@@ -21,7 +21,6 @@ CARP::CARP(QVBoxLayout *parentFrame) : CFields()
     grd->addWidget(new QLabel("Destination IP:"), 4, 0, Qt::AlignLeft);
     grd->addWidget(&ipdst, 4, 1, Qt::AlignLeft);
 
-    parentFrame->insertWidget(0, &grpbox);
     parentFrame->setAlignment(Qt::AlignCenter);
     grpbox.show();
 }

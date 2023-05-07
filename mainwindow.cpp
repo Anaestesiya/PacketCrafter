@@ -112,6 +112,7 @@ void MainWindow::addProtoAction(CProtocol *proto, CFields *fields)
             {
                 static_cast<CProtocol *>(grp->itemAt(i)->widget())->setEnabled(false);
             }
+            proto->setEnabled(false);
         }
     }
 
@@ -127,6 +128,8 @@ void MainWindow::addProtoAction(CProtocol *proto, CFields *fields)
     }
 
     ui->verticalLayout_packet->insertWidget(index, packetproto);
+    if (packetproto->fields)
+        ui->verticalLayout_fields->insertWidget(index - 1, &packetproto->fields->grpbox);
     ui->verticalLayout_packet->setAlignment(Qt::AlignCenter);
 
     packetproto->show();

@@ -18,7 +18,6 @@ CIPv6fields::CIPv6fields(QVBoxLayout *parentFrame) : CFields()
     grd->addWidget(&HopLimit, 2, 1, Qt::AlignLeft);
     grpbox.setTitle("IPv6");
 
-    parentFrame->insertWidget(0, &grpbox);
     parentFrame->setAlignment(Qt::AlignCenter);
     grpbox.show();
 }

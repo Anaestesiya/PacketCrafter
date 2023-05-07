@@ -17,7 +17,6 @@ CIpv4fields::CIpv4fields(QVBoxLayout *parentFrame) : CFields()
     grd->addWidget(&TTL, 2, 1, Qt::AlignLeft);
     grpbox.setTitle("IPv4");
 
-    parentFrame->insertWidget(0, &grpbox);
     parentFrame->setAlignment(Qt::AlignCenter);
     grpbox.show();
 }

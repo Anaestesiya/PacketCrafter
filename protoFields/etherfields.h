@@ -14,13 +14,11 @@
 class CEtherFields : public CFields
 {
 public:
-    QLineEdit src;
-    QLineEdit dst;
+    QLineEdit srcMac;
+    QLineEdit dstMac;
 
     CEtherFields(QVBoxLayout *parentFrame);
-    virtual ~CEtherFields(){}
-
-    virtual void format(){}
+    ~CEtherFields(){}
 };
 
 #endif // CETHERFIELDS_H

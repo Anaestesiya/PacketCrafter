@@ -3,6 +3,15 @@
 
 //#include <QProcess>
 #include "protoFields/etherfields.h"
+#include "protoFields/ipv4fields.h"
+#include "protoFields/ipv6fields.h"
+#include "protoFields/chttp.h"
+#include "protoFields/icmp.h"
+#include "protoFields/tcp.h"
+#include "protoFields/udp.h"
+#include "protoFields/arp.h"
+
+#include <QComboBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -25,7 +34,10 @@ MainWindow::MainWindow(QWidget *parent)
         QGridLayout *grp = layer_groups[i - 1];
         for (int k = 0; k < grp->count(); ++k)
         {
-            static_cast<CProtocol *>(grp->itemAt(k)->widget())->layer = (ELayer)(i);
+            // Let ICMP be as TCP layer
+            if (!static_cast<CProtocol *>(grp->itemAt(k)->widget())->text().startsWith("ICMP"))
+                static_cast<CProtocol *>(grp->itemAt(k)->widget())->layer = (ELayer)(i);
+            else static_cast<CProtocol *>(grp->itemAt(k)->widget())->layer = (ELayer)(i-1);
         }
     }
 }
@@ -81,9 +93,26 @@ void MainWindow::addProtoAction(CProtocol *proto, CFields *fields)
     // Filter alogorithm
     QGridLayout *grp = (QGridLayout *)proto->parentWidget()->layout();
 
-    for (int i = 0; i < grp->count(); ++i)
+    if (proto->parentWidget() != ui->groupBox_internet)
     {
-        static_cast<CProtocol *>(grp->itemAt(i)->widget())->setEnabled(false);
+        for (int i = 0; i < grp->count(); ++i)
+        {
+            static_cast<CProtocol *>(grp->itemAt(i)->widget())->setEnabled(false);
+        }
+    }
+    else
+    {
+        for (int i = 0; i < grp->count(); ++i)
+        {
+            if (proto->text().contains("v6") && !static_cast<CProtocol *>(grp->itemAt(i)->widget())->text().contains("v6"))
+            {
+                static_cast<CProtocol *>(grp->itemAt(i)->widget())->setEnabled(false);
+            }
+            else if (!proto->text().contains("v6") && static_cast<CProtocol *>(grp->itemAt(i)->widget())->text().contains("v6"))
+            {
+                static_cast<CProtocol *>(grp->itemAt(i)->widget())->setEnabled(false);
+            }
+        }
     }
 
     int index = 1;
@@ -111,6 +140,8 @@ void MainWindow::clickedPacketProto()
 {
     qDebug() << ((CProtocol *)sender())->layer;
     QGridLayout *grp = layer_groups[((CProtocol *)sender())->layer - 1];
+    if (((CProtocol *)sender())->text().contains("ICMP"))
+        grp = layer_groups[((CProtocol *)sender())->layer];
     for (int i = 0; i < grp->count(); ++i)
     {
         static_cast<CProtocol *>(grp->itemAt(i)->widget())->setEnabled(true);
@@ -143,25 +174,25 @@ void MainWindow::on_pushButton_13_clicked()
 // ARP
 void MainWindow::on_pushButton_11_clicked()
 {
-    addProtoAction(ui->pushButton_11);
+    addProtoAction(ui->pushButton_11, new CARP(ui->verticalLayout_fields));
 }
 
 // IPv4
 void MainWindow::on_pushButton_10_clicked()
 {
-    addProtoAction(ui->pushButton_10);
+    addProtoAction(ui->pushButton_10, new CIpv4fields(ui->verticalLayout_fields));
 }
 
 // IPv6
 void MainWindow::on_pushButton_15_clicked()
 {
-    addProtoAction(ui->pushButton_15);
+    addProtoAction(ui->pushButton_15, new CIPv6fields(ui->verticalLayout_fields));
 }
 
 // ICMP
 void MainWindow::on_pushButton_12_clicked()
 {
-    addProtoAction(ui->pushButton_12);
+    addProtoAction(ui->pushButton_12, new Cicmp(ui->verticalLayout_fields));
 }
 
 // ICMPv6
@@ -174,13 +205,13 @@ void MainWindow::on_pushButton_16_clicked()
 // TCP
 void MainWindow::on_pushButton_8_clicked()
 {
-    addProtoAction(ui->pushButton_8);
+    addProtoAction(ui->pushButton_8, new CTCP(ui->verticalLayout_fields));
 }
 
 // UDP
 void MainWindow::on_pushButton_9_clicked()
 {
-    addProtoAction(ui->pushButton_9);
+    addProtoAction(ui->pushButton_9, new CUDP(ui->verticalLayout_fields));
 }
 
 /*
@@ -198,7 +229,7 @@ void MainWindow::on_pushButton_9_clicked()
 // HTTP
 void MainWindow::on_pushButton_5_clicked()
 {
-    addProtoAction(ui->pushButton_5);
+    addProtoAction(ui->pushButton_5, new Chttp(ui->verticalLayout_fields));
 }
 
 // FTP

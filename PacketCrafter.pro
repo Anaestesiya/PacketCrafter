@@ -12,14 +12,28 @@ SOURCES += \
     CProtocol.cpp \
     main.cpp \
     mainwindow.cpp \
+    protoFields/arp.cpp \
     protoFields/cfields.cpp \
-    protoFields/etherfields.cpp
+    protoFields/chttp.cpp \
+    protoFields/etherfields.cpp \
+    protoFields/icmp.cpp \
+    protoFields/ipv4fields.cpp \
+    protoFields/ipv6fields.cpp \
+    protoFields/tcp.cpp \
+    protoFields/udp.cpp
 
 HEADERS += \
     CProtocol.h \
     mainwindow.h \
+    protoFields/arp.h \
     protoFields/cfields.h \
-    protoFields/etherfields.h
+    protoFields/chttp.h \
+    protoFields/etherfields.h \
+    protoFields/icmp.h \
+    protoFields/ipv4fields.h \
+    protoFields/ipv6fields.h \
+    protoFields/tcp.h \
+    protoFields/udp.h
 
 FORMS += \
     mainwindow.ui

@@ -24,7 +24,7 @@ QString CPacketHandler::formatProtos()
         packet += format.left(format.indexOf('=')) + "/";
     }
     packet.chop(1);
-    this->packet = packet;
+    this->packet = script+packet;
 
     qDebug() << script << "\n";
     qDebug() << packet << "\n";

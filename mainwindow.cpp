@@ -332,13 +332,27 @@ void MainWindow::on_pushButton_3_clicked()
             // Save file as binary format
             // Add your binary format handling code here
             qDebug() << "Saving file as binary format: " << filePath;
+            qDebug() << packet << " " << scriptname;
+
+            QString script = "from scapy.all import *\n";
+            script += packet + "\n";
+            script += "binary_data = bytes(packet)\n";
+            script += "with open('" + filePath + "', 'wb') as file:\n";
+            script += "    file.write(binary_data)";
 
             QStringList arguments;
-            arguments << "-c" << QString("from scapy.utils import Bytes; %1; binary_data = bytes(packet); with open('%2', 'wb') as file: file.write(packet_bytes)").arg(packet).arg(filePath);
+            arguments << "-c" << script;
 
             QProcess scapyProcess;
             scapyProcess.start("python3", arguments);
-            scapyProcess.waitForFinished();
+            if (scapyProcess.waitForFinished())
+            {
+                QString output(scapyProcess.readAllStandardOutput());
+                qDebug()<<output;
+
+                QString err(scapyProcess.readAllStandardError());
+                qDebug()<<err;
+            }
         }
         else
         {

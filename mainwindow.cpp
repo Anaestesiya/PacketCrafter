@@ -15,6 +15,7 @@
 #include "protoFields/arp.h"
 
 #include "savefiledialog.h"
+#include "scenarioswindow.h"
 
 #include <QComboBox>
 
@@ -313,10 +314,10 @@ void MainWindow::on_pushButton_2_clicked()
 // 6. Auto open wireshark to look for traffic ?
 // 7. Add logging
 // 8. Add Cloud sync
-// 9. Add Saving
 // 10. Add scenarios
 
 
+// Save packets
 void MainWindow::on_pushButton_3_clicked()
 {
     validateParams();
@@ -407,5 +408,14 @@ void MainWindow::on_pushButton_3_clicked()
         // Dialog was accepted, continue with the chosen file path
         // Add any additional code here if needed
     }
+}
+
+// Packet scenarios
+void MainWindow::on_pushButton_clicked()
+{
+    ScenariosWindow *sw = new ScenariosWindow();
+    sw->m = this;
+    sw->show();
+    this->hide();
 }
 

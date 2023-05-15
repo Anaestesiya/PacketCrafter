@@ -22,7 +22,8 @@ SOURCES += \
     protoFields/ipv6fields.cpp \
     protoFields/tcp.cpp \
     protoFields/udp.cpp \
-    savefiledialog.cpp
+    savefiledialog.cpp \
+    scenarioswindow.cpp
 
 HEADERS += \
     CProtocol.h \
@@ -37,10 +38,12 @@ HEADERS += \
     protoFields/ipv6fields.h \
     protoFields/tcp.h \
     protoFields/udp.h \
-    savefiledialog.h
+    savefiledialog.h \
+    scenarioswindow.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    scenarioswindow.ui
 
 TRANSLATIONS += \
     PacketCrafter_uk_UA.ts

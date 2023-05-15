@@ -10,7 +10,7 @@
 
 #include "cfields.h"
 
-#define TCP_FORMAT "tcp=TCP()"
+#define TCP_FORMAT "tcp=TCP("
 
 class CTCP : public CFields
 {
@@ -21,10 +21,10 @@ public:
     QString format() override
     {
         QString format = TCP_FORMAT;
-        //        if (srcMac.text() != "")
-        //            format += "src=" + srcMac.text();
-        //        if (dstMac.text() != "")
-        //            format += ", dst=" + dstMac.text();
+        if (srcPort.value())
+            format += "sport=" + srcPort.value();
+        if (dstPort.value())
+            format += ", dport=" + dstPort.value();
         format += ")";
 
         return format;

@@ -20,10 +20,10 @@ public:
     QString format() override
     {
         QString format = UDP_FORMAT;
-        //        if (srcMac.text() != "")
-        //            format += "src=" + srcMac.text();
-        //        if (dstMac.text() != "")
-        //            format += ", dst=" + dstMac.text();
+//        if (srcMac.text() != "")
+//            format += "src=" + srcMac.text();
+//        if (dstMac.text() != "")
+//            format += ", dst=" + dstMac.text();
         format += ")";
 
         return format;

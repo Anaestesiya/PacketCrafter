@@ -25,6 +25,8 @@ CEtherFields::CEtherFields(QVBoxLayout *parentFrame) : CFields()
 
     dstMac.setValidator(validator);
     srcMac.setValidator(validator);
+    dstMac.setPlaceholderText("ff:ff:ff:ff:ff:ff");
+    srcMac.setPlaceholderText("Autofill");
 
     parentFrame->setAlignment(Qt::AlignCenter);
     grpbox.show();

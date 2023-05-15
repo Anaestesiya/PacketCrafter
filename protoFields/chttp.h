@@ -23,14 +23,13 @@ public:
 
     QString format() override
     {
-        QString format = HTTP_FORMAT;
-//        if (srcMac.text() != "")
-//            format += "src=" + srcMac.text();
-//        if (dstMac.text() != "")
-//            format += ", dst=" + dstMac.text();
-        format += ")";
-
-        return format;
+        char *format = new char[10000];
+        sscanf(format, HTTP_FORMAT, method.text().toStdString().c_str(),
+                path.text().toStdString().c_str(), version.text().toStdString().c_str(),
+                host.text().toStdString().c_str(), accept.text().toStdString().c_str(),
+                cacheControl.text().toStdString().c_str());
+        QString str_format(format);
+        return str_format;
     }
 
     Chttp(QVBoxLayout *parentFrame);

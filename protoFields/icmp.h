@@ -11,7 +11,7 @@
 
 #include "cfields.h"
 
-#define ICMP_FORMAT "icmp=IP()/ICMP()"
+#define ICMP_FORMAT "icmp=ICMP("
 
 class Cicmp : public CFields
 {
@@ -41,10 +41,8 @@ public:
     QString format() override
     {
         QString format = ICMP_FORMAT;
-//        if (srcMac.text() != "")
-//            format += "src=" + srcMac.text();
-//        if (dstMac.text() != "")
-//            format += ", dst=" + dstMac.text();
+
+        format += "type='" + type.currentText() + "'";
         format += ")";
 
         return format;

@@ -21,7 +21,8 @@ SOURCES += \
     protoFields/ipv4fields.cpp \
     protoFields/ipv6fields.cpp \
     protoFields/tcp.cpp \
-    protoFields/udp.cpp
+    protoFields/udp.cpp \
+    savefiledialog.cpp
 
 HEADERS += \
     CProtocol.h \
@@ -35,7 +36,8 @@ HEADERS += \
     protoFields/ipv4fields.h \
     protoFields/ipv6fields.h \
     protoFields/tcp.h \
-    protoFields/udp.h
+    protoFields/udp.h \
+    savefiledialog.h
 
 FORMS += \
     mainwindow.ui

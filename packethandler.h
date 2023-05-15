@@ -10,6 +10,8 @@ public:
     QString formatProtos();
     int sendPacket(QString filename);
 
+    QString packet;
+
     QList<CFields *> protoVector;
     QString Ifc;
     int packetCount;

@@ -23,6 +23,7 @@ public:
     ~MainWindow();
 
     void addProtoAction(CProtocol *proto, CFields *fields = nullptr);
+    void validateParams();
 
     CPacketHandler packetHandler;
 
@@ -60,6 +61,8 @@ private slots:
     void on_pushButton_11_clicked();
 
     void on_pushButton_2_clicked();
+
+    void on_pushButton_3_clicked();
 
 private:
     Ui::MainWindow *ui;

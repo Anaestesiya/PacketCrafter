@@ -14,6 +14,8 @@
 #include "protoFields/udp.h"
 #include "protoFields/arp.h"
 
+#include "savefiledialog.h"
+
 #include <QComboBox>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -262,6 +264,17 @@ void MainWindow::on_pushButton_17_clicked()
     addProtoAction(ui->pushButton_17);
 }
 
+void MainWindow::validateParams()
+{
+    packetHandler.protoVector.clear();
+    for (int i = 1; i < ui->verticalLayout_packet->count(); ++i)
+    {
+        QWidget *itemSort = ui->verticalLayout_packet->itemAt(i)->widget();
+        packetHandler.protoVector.append(((CProtocol *)itemSort)->fields);
+    }
+    std::reverse(packetHandler.protoVector.begin(), packetHandler.protoVector.end());
+}
+
 // send button
 void MainWindow::on_pushButton_2_clicked()
 {
@@ -278,16 +291,11 @@ void MainWindow::on_pushButton_2_clicked()
     }
     ui->lineEdit_Ifc->setPalette(palette);
 
-
-    packetHandler.protoVector.clear();
-    for (int i = 1; i < ui->verticalLayout_packet->count(); ++i)
-    {
-        QWidget *itemSort = ui->verticalLayout_packet->itemAt(i)->widget();
-        packetHandler.protoVector.append(((CProtocol *)itemSort)->fields);
-    }
-    std::reverse(packetHandler.protoVector.begin(), packetHandler.protoVector.end());
+    validateParams();
 
     QString scriptname = packetHandler.formatProtos();
+    if (scriptname == "")
+        return;
     packetHandler.Ifc = ui->lineEdit_Ifc->text();
     packetHandler.period = ui->spinBox_period->value();
     packetHandler.packetCount = ui->spinBox_count->value();
@@ -299,8 +307,91 @@ void MainWindow::on_pushButton_2_clicked()
 
 // 1. add "Autofill strings to lineedits as a hint"
 // 2. add default values to particular fields
-// 3. Send packet dialog
+// 3. add validations for packets
 // 4. Varify packet
 // 5. Open and parse file
 // 6. Auto open wireshark to look for traffic ?
+// 7. Add logging
+// 8. Add Cloud sync
+// 9. Add Saving
+// 10. Add scenarios
+
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    validateParams();
+    QString scriptname = packetHandler.formatProtos();
+    QString packet = packetHandler.packet;
+    if (scriptname == "")
+        return;
+
+    SaveFileDialog dialog;
+    QObject::connect(&dialog, &SaveFileDialog::saveFile, [packet, scriptname](const QString& filePath, bool isBinaryFormat) {
+        if (isBinaryFormat)
+        {
+            // Save file as binary format
+            // Add your binary format handling code here
+            qDebug() << "Saving file as binary format: " << filePath;
+
+            QStringList arguments;
+            arguments << "-c" << QString("from scapy.utils import Bytes; %1; binary_data = bytes(packet); with open('%2', 'wb') as file: file.write(packet_bytes)").arg(packet).arg(filePath);
+
+            QProcess scapyProcess;
+            scapyProcess.start("python3", arguments);
+            scapyProcess.waitForFinished();
+        }
+        else
+        {
+            // Save file as text format
+            // Add your text format handling code here
+            qDebug() << "Saving file as text format: " << filePath;
+
+            // Create a QFile object for the source file
+            QFile sourceFile(scriptname);
+
+            // Open the source file in ReadOnly mode
+            if (!sourceFile.open(QIODevice::ReadOnly))
+            {
+                qDebug() << "Failed to open source file.";
+                return false;
+            }
+
+            // Create a QFile object for the destination file
+            QFile destinationFile(filePath);
+
+            // Open the destination file in WriteOnly mode
+            if (!destinationFile.open(QIODevice::WriteOnly))
+            {
+                qDebug() << "Failed to open destination file.";
+                sourceFile.close();
+                return false;
+            }
+
+            // Read the contents of the source file
+            QByteArray fileData = sourceFile.readAll();
+
+            // Write the contents to the destination file
+            qint64 bytesWritten = destinationFile.write(fileData);
+
+            // Close the source and destination files
+            sourceFile.close();
+            destinationFile.close();
+
+            // Check if the bytes written matches the file size
+            if (bytesWritten != fileData.size())
+            {
+                qDebug() << "Failed to copy the file.";
+                return false;
+            }
+
+            qDebug() << "File copied successfully.";
+        }
+    });
+
+    if (dialog.exec() == QDialog::Accepted)
+    {
+        // Dialog was accepted, continue with the chosen file path
+        // Add any additional code here if needed
+    }
+}
 

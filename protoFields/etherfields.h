@@ -22,9 +22,9 @@ public:
     {
         QString format = ETHER_FORMAT;
         if (srcMac.text() != "")
-            format += "src=" + srcMac.text();
+            format += "src='" + srcMac.text() + "'";
         if (dstMac.text() != "")
-            format += ", dst=" + dstMac.text();
+            format += ", dst='" + dstMac.text() + "'";
         format += ")";
 
         return format;

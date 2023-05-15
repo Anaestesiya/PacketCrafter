@@ -8,6 +8,7 @@
 
 #include "CProtocol.h"
 #include "protoFields/cfields.h"
+#include "packethandler.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -22,6 +23,8 @@ public:
     ~MainWindow();
 
     void addProtoAction(CProtocol *proto, CFields *fields = nullptr);
+
+    CPacketHandler packetHandler;
 
 private slots:
     void on_pushButton_set_UA_clicked();

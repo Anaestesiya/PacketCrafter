@@ -18,6 +18,18 @@ public:
     QSpinBox srcPort;
     QSpinBox dstPort;
 
+    QString format() override
+    {
+        QString format = TCP_FORMAT;
+        //        if (srcMac.text() != "")
+        //            format += "src=" + srcMac.text();
+        //        if (dstMac.text() != "")
+        //            format += ", dst=" + dstMac.text();
+        format += ")";
+
+        return format;
+    }
+
     CTCP(QVBoxLayout *parentFrame);
 };
 

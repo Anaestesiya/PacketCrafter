@@ -4,6 +4,7 @@
 #include <QProcess>
 #include <QDialog>
 
+#include "packethandler.h"
 #include "protoFields/etherfields.h"
 #include "protoFields/ipv4fields.h"
 #include "protoFields/ipv6fields.h"
@@ -42,6 +43,12 @@ MainWindow::MainWindow(QWidget *parent)
             else static_cast<CProtocol *>(grp->itemAt(k)->widget())->layer = (ELayer)(i-1);
         }
     }
+    ui->spinBox_count->setButtonSymbols(QAbstractSpinBox::NoButtons);
+    ui->spinBox_count->setRange(1, 10000);
+
+    ui->spinBox_period->setButtonSymbols(QAbstractSpinBox::NoButtons);
+    ui->spinBox_period->setRange(1,10);
+
 }
 
 MainWindow::~MainWindow()
@@ -258,16 +265,34 @@ void MainWindow::on_pushButton_17_clicked()
 // send button
 void MainWindow::on_pushButton_2_clicked()
 {
-    QProcess process;
+    QRegularExpression emptyRegex("^\\s*$"); // Regular expression to check for empty input
+    QPalette palette = ui->lineEdit_Ifc->palette();
+    if (ui->lineEdit_Ifc->text().isEmpty() || ui->lineEdit_Ifc->text().contains(emptyRegex)) {
+        // Input is empty or contains only whitespace characters
+        palette.setColor(QPalette::Base, Qt::red); // Set the background color to red
+        ui->lineEdit_Ifc->setPalette(palette);
+        return;
+    } else {
+        // Input is not empty
+        palette.setColor(QPalette::Base, Qt::white); // Set the background color to white
+    }
+    ui->lineEdit_Ifc->setPalette(palette);
 
-    process.start("/home/anastasiiafrolova/send_ssdp.py");
-    process.waitForFinished();
 
-    QString output(process.readAllStandardOutput());
-    qDebug()<<output;
+    packetHandler.protoVector.clear();
+    for (int i = 1; i < ui->verticalLayout_packet->count(); ++i)
+    {
+        QWidget *itemSort = ui->verticalLayout_packet->itemAt(i)->widget();
+        packetHandler.protoVector.append(((CProtocol *)itemSort)->fields);
+    }
+    std::reverse(packetHandler.protoVector.begin(), packetHandler.protoVector.end());
 
-    QString err(process.readAllStandardError());
-    qDebug()<<err;
+    QString scriptname = packetHandler.formatProtos();
+    packetHandler.Ifc = ui->lineEdit_Ifc->text();
+    packetHandler.period = ui->spinBox_period->value();
+    packetHandler.packetCount = ui->spinBox_count->value();
+
+    packetHandler.sendPacket(scriptname);
 }
 
 // TODOs

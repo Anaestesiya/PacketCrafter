@@ -12,6 +12,7 @@ SOURCES += \
     CProtocol.cpp \
     main.cpp \
     mainwindow.cpp \
+    packethandler.cpp \
     protoFields/arp.cpp \
     protoFields/cfields.cpp \
     protoFields/chttp.cpp \
@@ -25,6 +26,7 @@ SOURCES += \
 HEADERS += \
     CProtocol.h \
     mainwindow.h \
+    packethandler.h \
     protoFields/arp.h \
     protoFields/cfields.h \
     protoFields/chttp.h \

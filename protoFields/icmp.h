@@ -38,6 +38,17 @@ public:
         icmptypes->insert("address-mask-reply", 18);
         icmptypes->insert("traceroute", 30);
     }
+    QString format() override
+    {
+        QString format = ICMP_FORMAT;
+//        if (srcMac.text() != "")
+//            format += "src=" + srcMac.text();
+//        if (dstMac.text() != "")
+//            format += ", dst=" + dstMac.text();
+        format += ")";
+
+        return format;
+    }
 };
 
 

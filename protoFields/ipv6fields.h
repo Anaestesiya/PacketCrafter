@@ -20,6 +20,18 @@ public:
     QLineEdit dstIP;
     QSpinBox HopLimit;
 
+    QString format() override
+    {
+        QString format = IPV6_FORMAT;
+        //        if (srcMac.text() != "")
+        //            format += "src=" + srcMac.text();
+        //        if (dstMac.text() != "")
+        //            format += ", dst=" + dstMac.text();
+        format += ")";
+
+        return format;
+    }
+
     CIPv6fields(QVBoxLayout *parentFrame);
     ~CIPv6fields(){}
 };

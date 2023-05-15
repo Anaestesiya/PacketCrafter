@@ -8,6 +8,7 @@ class CFields
 public:
     CFields();
     QGroupBox grpbox;
+    virtual QString format() = 0;
     virtual ~CFields(){}
 };
 

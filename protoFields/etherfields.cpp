@@ -1,5 +1,7 @@
 #include "etherfields.h"
 
+#include <QRegularExpression>
+#include <QRegularExpressionValidator>
 #include <QSizePolicy>
 
 // How to fill with default values ?
@@ -17,6 +19,12 @@ CEtherFields::CEtherFields(QVBoxLayout *parentFrame) : CFields()
     grd->addWidget(new QLabel("Destination MAC address:"), 1, 0, Qt::AlignLeft);
     grd->addWidget(&dstMac, 1, 1, Qt::AlignLeft);
     grpbox.setTitle("Ethernet");
+
+    QRegularExpression macAddressRegex("^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$");
+    QValidator *validator = new QRegularExpressionValidator(macAddressRegex);
+
+    dstMac.setValidator(validator);
+    srcMac.setValidator(validator);
 
     parentFrame->setAlignment(Qt::AlignCenter);
     grpbox.show();

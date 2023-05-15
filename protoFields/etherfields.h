@@ -9,8 +9,8 @@
 
 #include "cfields.h"
 
-#define ETHER_FORMAT "ether=Ether(src='%s', dst='%s', type=%d)"
-
+#define ETHER_FORMAT "ether=Ether("
+// src='%s', dst='%s', type=%d
 class CEtherFields : public CFields
 {
 public:
@@ -18,6 +18,17 @@ public:
     QLineEdit dstMac;
 
     CEtherFields(QVBoxLayout *parentFrame);
+    QString format() override
+    {
+        QString format = ETHER_FORMAT;
+        if (srcMac.text() != "")
+            format += "src=" + srcMac.text();
+        if (dstMac.text() != "")
+            format += ", dst=" + dstMac.text();
+        format += ")";
+
+        return format;
+    }
     ~CEtherFields(){}
 };
 

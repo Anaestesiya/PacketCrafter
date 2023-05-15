@@ -34,6 +34,11 @@ public:
     QLineEdit ipsrc;
     QLineEdit ipdst;
 
+    QString format() override
+    {
+        return QString(ARP_FORMAT);
+    }
+
     CARP(QVBoxLayout *parent);
 };
 

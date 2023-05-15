@@ -16,6 +16,18 @@ class CUDP : public CFields
 {
 public:
     CUDP(QVBoxLayout *parentFrame);
+
+    QString format() override
+    {
+        QString format = UDP_FORMAT;
+        //        if (srcMac.text() != "")
+        //            format += "src=" + srcMac.text();
+        //        if (dstMac.text() != "")
+        //            format += ", dst=" + dstMac.text();
+        format += ")";
+
+        return format;
+    }
 };
 
 #endif // CUDP_H

@@ -19,6 +19,18 @@ public:
     QLineEdit dstIP;
     QSpinBox TTL;
 
+    QString format() override
+    {
+        QString format = IPV4_FORMAT;
+        //        if (srcMac.text() != "")
+        //            format += "src=" + srcMac.text();
+        //        if (dstMac.text() != "")
+        //            format += ", dst=" + dstMac.text();
+        format += ")";
+
+        return format;
+    }
+
     CIpv4fields(QVBoxLayout *parentFrame);
     ~CIpv4fields(){}
 };

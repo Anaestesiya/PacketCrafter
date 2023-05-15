@@ -17,6 +17,12 @@ CIpv4fields::CIpv4fields(QVBoxLayout *parentFrame) : CFields()
     grd->addWidget(&TTL, 2, 1, Qt::AlignLeft);
     grpbox.setTitle("IPv4");
 
+    QRegularExpression ipv4AddressRegex("^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
+    QValidator *IPvalidator = new QRegularExpressionValidator(ipv4AddressRegex);
+
+    srcIP.setValidator(IPvalidator);
+    dstIP.setValidator(IPvalidator);
+
     parentFrame->setAlignment(Qt::AlignCenter);
     grpbox.show();
 }

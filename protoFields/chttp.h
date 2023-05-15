@@ -21,6 +21,18 @@ public:
     QLineEdit accept;
     QLineEdit cacheControl;
 
+    QString format() override
+    {
+        QString format = HTTP_FORMAT;
+//        if (srcMac.text() != "")
+//            format += "src=" + srcMac.text();
+//        if (dstMac.text() != "")
+//            format += ", dst=" + dstMac.text();
+        format += ")";
+
+        return format;
+    }
+
     Chttp(QVBoxLayout *parentFrame);
 };
 

@@ -56,6 +56,8 @@ private slots:
 
     void on_pushButton_11_clicked();
 
+    void on_pushButton_2_clicked();
+
 private:
     Ui::MainWindow *ui;
     QTranslator translator;

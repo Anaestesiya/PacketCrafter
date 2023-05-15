@@ -1,7 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-//#include <QProcess>
+#include <QProcess>
+#include <QDialog>
+
 #include "protoFields/etherfields.h"
 #include "protoFields/ipv4fields.h"
 #include "protoFields/ipv6fields.h"
@@ -252,4 +254,28 @@ void MainWindow::on_pushButton_17_clicked()
 {
     addProtoAction(ui->pushButton_17);
 }
+
+// send button
+void MainWindow::on_pushButton_2_clicked()
+{
+    QProcess process;
+
+    process.start("/home/anastasiiafrolova/send_ssdp.py");
+    process.waitForFinished();
+
+    QString output(process.readAllStandardOutput());
+    qDebug()<<output;
+
+    QString err(process.readAllStandardError());
+    qDebug()<<err;
+}
+
+// TODOs
+
+// 1. add "Autofill strings to lineedits as a hint"
+// 2. add default values to particular fields
+// 3. Send packet dialog
+// 4. Varify packet
+// 5. Open and parse file
+// 6. Auto open wireshark to look for traffic ?
 

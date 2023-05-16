@@ -310,8 +310,9 @@ void MainWindow::on_pushButton_2_clicked()
 // 2. add default values to particular fields
 // 3. add validations for packets
 // 4. Varify packet
-// 5. Open and parse file
 // 6. Auto open wireshark to look for traffic ?
+
+// 5. Open and parse file
 // 7. Add logging
 // 8. Add Cloud sync
 // 10. Add scenarios

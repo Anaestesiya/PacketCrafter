@@ -19,5 +19,6 @@ CTCP::CTCP(QVBoxLayout *parentFrame) : CFields()
     grpbox.setTitle("TCP");
 
     parentFrame->setAlignment(Qt::AlignCenter);
+    qDebug() << "Show TCP";
     grpbox.show();
 }

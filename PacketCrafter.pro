@@ -23,7 +23,9 @@ SOURCES += \
     protoFields/tcp.cpp \
     protoFields/udp.cpp \
     savefiledialog.cpp \
-    scenarioswindow.cpp
+    scenarios/scenario.cpp \
+    scenarios/tcp_handshake.cpp \
+    scenarioswindow.cpp \
 
 HEADERS += \
     CProtocol.h \
@@ -39,7 +41,9 @@ HEADERS += \
     protoFields/tcp.h \
     protoFields/udp.h \
     savefiledialog.h \
-    scenarioswindow.h
+    scenarios/scenario.h \
+    scenarios/tcp_handshake.h \
+    scenarioswindow.h \
 
 FORMS += \
     mainwindow.ui \
@@ -58,3 +62,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 #INCLUDEPATH += /usr/include/python3.8
 #LIBS += -L/usr/lib/python3.8/config-3.8-x86_64-linux-gnu
 #LIBS += -L/usr/lib -lpython3.8 -lcrypt -lpthread -ldl  -lutil -lm -lm
+
+DISTFILES += \
+    Tcp-handshake.svg.png \
+    scenarios/python_scripts/tcp_handhsake.py
+
+RESOURCES += \
+    Resources.qrc

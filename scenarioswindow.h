@@ -4,6 +4,7 @@
 #include <QMainWindow>
 
 #include "mainwindow.h"
+#include "scenarios/scenario.h"
 
 namespace Ui {
 class ScenariosWindow;
@@ -17,10 +18,18 @@ public:
     explicit ScenariosWindow(QWidget *parent = nullptr);
     ~ScenariosWindow();
 
+
+    void showScenario(Scenario *scenario);
+    void hideScenario(Scenario *scenario);
+
     MainWindow *m;
+    Scenario *activeScenario;
+
 
 private slots:
     void on_pushButton_clicked();
+
+    void on_pushButton_5_clicked();
 
 private:
     Ui::ScenariosWindow *ui;

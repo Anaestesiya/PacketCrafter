@@ -26,5 +26,7 @@ CIpv4fields::CIpv4fields(QVBoxLayout *parentFrame) : CFields(),
     dstIP.setValidator(IPvalidator);
 
     parentFrame->setAlignment(Qt::AlignCenter);
+    qDebug() << "Show ipv4";
+
     grpbox.show();
 }

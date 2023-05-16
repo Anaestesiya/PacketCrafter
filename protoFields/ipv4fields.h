@@ -21,32 +21,41 @@ public:
 
     QRegularExpression ipv4AddressRegex;
 
-    QString format() override
+    int validatedstIP()
     {
         QPalette palette = dstIP.palette();
         if (dstIP.text().isEmpty() || !dstIP.text().contains(ipv4AddressRegex)) {
             // Input is empty or contains only whitespace characters
             palette.setColor(QPalette::Base, Qt::red); // Set the background color to red
             dstIP.setPalette(palette);
-            return "";
+            return -1;
         } else {
             // Input is not empty
             palette.setColor(QPalette::Base, Qt::white); // Set the background color to white
         }
         dstIP.setPalette(palette);
-
-        palette = srcIP.palette();
+        return 0;
+    }
+    int validateSrcIP()
+    {
+        QPalette palette = srcIP.palette();
         if (!srcIP.text().isEmpty() && !srcIP.text().contains(ipv4AddressRegex)) {
             // Input is empty or contains only whitespace characters
             palette.setColor(QPalette::Base, Qt::red); // Set the background color to red
             srcIP.setPalette(palette);
-            return "";
+            return -1;
         } else {
             // Input is not empty
             palette.setColor(QPalette::Base, Qt::white); // Set the background color to white
         }
         srcIP.setPalette(palette);
+        return 0;
+    }
 
+    QString format() override
+    {
+        if (validatedstIP() == -1) return "";
+        if (validateSrcIP() == -1) return "";
 
         QString format = IPV4_FORMAT;
         if (srcIP.text() != "")

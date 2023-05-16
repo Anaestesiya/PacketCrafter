@@ -1,12 +1,33 @@
 from scapy.all import IP, TCP, sr, sr1, send
 import sys
+import argparse
+from scapy.all import get_if_addr
 
-# Read source and destination IP addresses and port numbers from script arguments
-src_ip = sys.argv[1]
-dst_ip = sys.argv[2]
-src_port = int(sys.argv[3])
-dst_port = int(sys.argv[4])
-iface = sys.argv[5]  # Interface name
+def get_interface_ip(interface):
+    try:
+        ip_address = get_if_addr(interface)
+        return ip_address
+    except:
+        return None
+
+# Parse command-line arguments
+parser = argparse.ArgumentParser()
+parser.add_argument('--src_ip', help='Source IP address')
+parser.add_argument('--dst_ip', help='Destination IP address', required=True)
+parser.add_argument('--src_port', type=int, help='Source port',required=True)
+parser.add_argument('--dst_port', type=int, help='Destination port', required=True)
+parser.add_argument('--iface', help='Network interface')
+args = parser.parse_args()
+
+# Get source IP address from interface if not provided
+if args.iface and not args.src_ip:
+    args.src_ip = get_interface_ip(args.iface)
+
+src_ip = args.src_ip
+dst_ip = args.dst_ip
+src_port = args.src_port
+dst_port = args.dst_port
+iface = args.iface
 
 # Create SYN packet (Step 1: Send SYN)
 syn_packet = IP(src=src_ip, dst=dst_ip) / TCP(sport=src_port, dport=dst_port, flags="S")

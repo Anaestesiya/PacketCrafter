@@ -58,3 +58,22 @@ void ScenariosWindow::on_pushButton_5_clicked()
     showScenario(new TCP_handshake(ui->verticalLayout_fields, ui->pushButton_5));
 }
 
+
+void ScenariosWindow::on_pushButton_4_clicked()
+{
+    QRegularExpression emptyRegex("^\\s*$"); // Regular expression to check for empty input
+    QPalette palette = ui->lineEdit->palette();
+    if (ui->lineEdit->text().isEmpty() || ui->lineEdit->text().contains(emptyRegex)) {
+        // Input is empty or contains only whitespace characters
+        palette.setColor(QPalette::Base, Qt::red); // Set the background color to red
+        ui->lineEdit->setPalette(palette);
+        return;
+    } else {
+        // Input is not empty
+        palette.setColor(QPalette::Base, Qt::white); // Set the background color to white
+    }
+    ui->lineEdit->setPalette(palette);
+
+    activeScenario->startScenario(ui->lineEdit->text());
+}
+

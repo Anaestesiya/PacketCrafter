@@ -15,7 +15,7 @@ public:
 
     Scenario();
 
-    virtual void startScenario() = 0;
+    virtual int startScenario(QString Ifc) = 0;
 
     virtual ~Scenario(){}
 };

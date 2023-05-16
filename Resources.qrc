@@ -2,4 +2,7 @@
     <qresource prefix="/images">
         <file>Tcp-handshake.svg.png</file>
     </qresource>
+    <qresource>
+        <file>scenarios/python_scripts/tcp_handhsake.py</file>
+    </qresource>
 </RCC>

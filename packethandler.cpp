@@ -49,10 +49,18 @@ QString CPacketHandler::formatProtos()
     return file.fileName();
 }
 
-int CPacketHandler::sendPacket(QString filename)
+int CPacketHandler::sendPacket()
 {
-    progress = 0;
     LOG_DEBUG("start %s", __FUNCTION__);
+    QString filename = this->formatProtos();
+    if (filename == "")
+    {
+        LOG_ERROR("Script name is empty");
+        return -1;
+    }
+
+    progress = 0;
+
     QString num_packets = QString("num_packets = %1").arg(this->packetCount);
     QString delay = QString("delay = %1").arg((float)(1 / this->period));
     QString sendLine = QString("for _ in range(num_packets):\n"
@@ -92,7 +100,7 @@ int CPacketHandler::sendPacket(QString filename)
     process_->start("/usr/bin/python3", QStringList() << filename);
 
     LOG_DEBUG("end %s", __FUNCTION__);
-
+    return 0;
 }
 
 void CPacketHandler::onReadyReadStandardOutput()

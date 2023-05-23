@@ -23,7 +23,7 @@ public:
     ~MainWindow();
 
     void addProtoAction(CProtocol *proto, CFields *fields = nullptr);
-    void validateParams();
+    void changeLanguage();
 
     CPacketHandler packetHandler;
 
@@ -70,7 +70,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    QTranslator translator;
+
     QGridLayout *layer_groups[5];
 };
 #endif // MAINWINDOW_H

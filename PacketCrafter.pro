@@ -11,9 +11,12 @@ CONFIG += c++17
 SOURCES += \
     CProtocol.cpp \
     clogger.cpp \
+    languagecontroller.cpp \
     main.cpp \
     mainwindow.cpp \
     packethandler.cpp \
+    packetsaver.cpp \
+    packetvalidator.cpp \
     protoFields/arp.cpp \
     protoFields/cfields.cpp \
     protoFields/chttp.cpp \
@@ -31,8 +34,11 @@ SOURCES += \
 HEADERS += \
     CProtocol.h \
     clogger.h \
+    languagecontroller.h \
     mainwindow.h \
     packethandler.h \
+    packetsaver.h \
+    packetvalidator.h \
     protoFields/arp.h \
     protoFields/cfields.h \
     protoFields/chttp.h \

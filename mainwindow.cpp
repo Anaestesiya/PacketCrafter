@@ -17,6 +17,9 @@
 #include "savefiledialog.h"
 #include "scenarioswindow.h"
 #include "clogger.h"
+#include "packetsaver.h"
+#include "packetvalidator.h"
+#include "languagecontroller.h"
 
 #include <QComboBox>
 
@@ -26,10 +29,13 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    int res = translator.load("PacketCrafter_uk_UA");
-    if (res < 0)
-        LOG_ERROR("Failed to load translator");
-    qApp->installTranslator(&translator);
+//    int res = translator.load("PacketCrafter_uk_UA");
+//    if (res < 0)
+//        LOG_ERROR("Failed to load translator");
+//    qApp->installTranslator(&translator);
+    ui->pushButton_set_EN->setEnabled(false);
+    ui->pushButton_set_UA->setEnabled(true);
+    changeLanguage();
 
     layer_groups[0] = (QGridLayout *)(ui->groupBox_application->layout());
     layer_groups[1] = (QGridLayout *)(ui->groupBox_transport->layout());
@@ -63,17 +69,33 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::changeLanguage()
+{
+    if (ui->pushButton_set_UA->isEnabled() && LanguageController::currentLanguage == LanguageController::UA)
+    {
+        ui->pushButton_set_UA->setEnabled(false);
+        ui->pushButton_set_EN->setEnabled(true);
+
+        LanguageController::changeToUA();
+    }
+    if (ui->pushButton_set_EN->isEnabled() && LanguageController::currentLanguage == LanguageController::EN)
+    {
+        ui->pushButton_set_UA->setEnabled(true);
+        ui->pushButton_set_EN->setEnabled(false);
+
+        LanguageController::changeToEN();
+    }
+
+}
+
 
 void MainWindow::on_pushButton_set_UA_clicked()
 {
     LOG_INFO("Change language to UA");
-    // toggle effect
-    ui->pushButton_set_UA->setEnabled(false);
-    ui->pushButton_set_EN->setEnabled(true);
-    // ToDo: set translation
 
-    translator.load("PacketCrafter_uk_UA");
-    qApp->installTranslator(&translator);
+    // toggle effect
+    LanguageController::currentLanguage = LanguageController::UA;
+    changeLanguage();
 
     ui->retranslateUi(this);
 }
@@ -84,11 +106,8 @@ void MainWindow::on_pushButton_set_EN_clicked()
     LOG_INFO("Change language to EN");
 
     // toggle effect
-    ui->pushButton_set_EN->setEnabled(false);
-    ui->pushButton_set_UA->setEnabled(true);
-    // ToDo: set translation
-    translator.load("PacketCrafter_en_US");
-    qApp->installTranslator(&translator);
+    LanguageController::currentLanguage = LanguageController::EN;
+    changeLanguage();
 
     ui->retranslateUi(this);
 }
@@ -243,18 +262,6 @@ void MainWindow::on_pushButton_9_clicked()
     addProtoAction(ui->pushButton_9, new CUDP(ui->verticalLayout_fields));
 }
 
-/*
- *     QProcess process;
-    process.start("/home/anastasiiafrolova/send_ssdp.py");
-    process.waitForFinished();
-
-    QString output(process.readAllStandardOutput());
-    qDebug()<<output;
-
-    QString err(process.readAllStandardError());
-    qDebug()<<err;
-*/
-
 // HTTP
 void MainWindow::on_pushButton_5_clicked()
 {
@@ -279,51 +286,29 @@ void MainWindow::on_pushButton_17_clicked()
     addProtoAction(ui->pushButton_17);
 }
 
-void MainWindow::validateParams()
-{
-    LOG_DEBUG("In %s", __FUNCTION__);
-    packetHandler.protoVector.clear();
-    for (int i = 1; i < ui->verticalLayout_packet->count(); ++i)
-    {
-        QWidget *itemSort = ui->verticalLayout_packet->itemAt(i)->widget();
-        packetHandler.protoVector.append(((CProtocol *)itemSort)->fields);
-    }
-    std::reverse(packetHandler.protoVector.begin(), packetHandler.protoVector.end());
-}
-
 // send button
 void MainWindow::on_pushButton_2_clicked()
 {
-    LOG_DEBUG("In %s", __FUNCTION__);
     LOG_INFO("Press send");
-    QRegularExpression emptyRegex("^\\s*$"); // Regular expression to check for empty input
-    QPalette palette = ui->lineEdit_Ifc->palette();
-    if (ui->lineEdit_Ifc->text().isEmpty() || ui->lineEdit_Ifc->text().contains(emptyRegex)) {
-        // Input is empty or contains only whitespace characters
-        palette.setColor(QPalette::Base, Qt::red); // Set the background color to red
-        ui->lineEdit_Ifc->setPalette(palette);
-        LOG_WARNING("Interface field is incorrect");
-        return;
-    } else {
-        // Input is not empty
-        LOG_DEBUG("Interface is OK");
-        palette.setColor(QPalette::Base, Qt::white); // Set the background color to white
-    }
-    ui->lineEdit_Ifc->setPalette(palette);
 
-    validateParams();
-
-    QString scriptname = packetHandler.formatProtos();
-    if (scriptname == "")
+    int ret = PacketValidator::validateIfc(packetHandler, ui->lineEdit_Ifc);
+    if (ret == -1)
     {
-        LOG_ERROR("Script name is empty");
+        LOG_ERROR("Interface validation failed: %s", ui->lineEdit_Ifc->text().toStdString().c_str());
         return;
     }
+    PacketValidator::validateParams(packetHandler, ui->verticalLayout_packet);
+
     packetHandler.Ifc = ui->lineEdit_Ifc->text();
     packetHandler.period = ui->spinBox_period->value();
     packetHandler.packetCount = ui->spinBox_count->value();
 
-    packetHandler.sendPacket(scriptname);
+    ret = packetHandler.sendPacket();
+    if (ret == -1)
+    {
+        LOG_ERROR("Send packet failed");
+        return;
+    }
 }
 
 // TODOs
@@ -341,95 +326,8 @@ void MainWindow::on_pushButton_2_clicked()
 // Save packets
 void MainWindow::on_pushButton_3_clicked()
 {
-    LOG_DEBUG(__FUNCTION__);
-    validateParams();
-    QString scriptname = packetHandler.formatProtos();
-    QString packet = packetHandler.packet;
-    if (scriptname == "")
-        return;
-
-    SaveFileDialog dialog;
-    QObject::connect(&dialog, &SaveFileDialog::saveFile, [packet, scriptname](const QString& filePath, bool isBinaryFormat) {
-        if (isBinaryFormat)
-        {
-            // Save file as binary format
-            // Add your binary format handling code here
-            qDebug() << "Saving file as binary format: " << filePath;
-            qDebug() << packet << " " << scriptname;
-
-            QString script = "from scapy.all import *\n";
-            script += packet + "\n";
-            script += "binary_data = bytes(packet)\n";
-            script += "with open('" + filePath + "', 'wb') as file:\n";
-            script += "    file.write(binary_data)";
-
-            QStringList arguments;
-            arguments << "-c" << script;
-
-            QProcess scapyProcess;
-            scapyProcess.start("python3", arguments);
-            if (scapyProcess.waitForFinished())
-            {
-                QString output(scapyProcess.readAllStandardOutput());
-                qDebug()<<output;
-
-                QString err(scapyProcess.readAllStandardError());
-                qDebug()<<err;
-            }
-        }
-        else
-        {
-            // Save file as text format
-            // Add your text format handling code here
-            qDebug() << "Saving file as text format: " << filePath;
-
-            // Create a QFile object for the source file
-            QFile sourceFile(scriptname);
-
-            // Open the source file in ReadOnly mode
-            if (!sourceFile.open(QIODevice::ReadOnly))
-            {
-                qDebug() << "Failed to open source file.";
-                return false;
-            }
-
-            // Create a QFile object for the destination file
-            QFile destinationFile(filePath);
-
-            // Open the destination file in WriteOnly mode
-            if (!destinationFile.open(QIODevice::WriteOnly))
-            {
-                qDebug() << "Failed to open destination file.";
-                sourceFile.close();
-                return false;
-            }
-
-            // Read the contents of the source file
-            QByteArray fileData = sourceFile.readAll();
-
-            // Write the contents to the destination file
-            qint64 bytesWritten = destinationFile.write(fileData);
-
-            // Close the source and destination files
-            sourceFile.close();
-            destinationFile.close();
-
-            // Check if the bytes written matches the file size
-            if (bytesWritten != fileData.size())
-            {
-                qDebug() << "Failed to copy the file.";
-                return false;
-            }
-
-            qDebug() << "File copied successfully.";
-        }
-    });
-
-    if (dialog.exec() == QDialog::Accepted)
-    {
-        // Dialog was accepted, continue with the chosen file path
-        // Add any additional code here if needed
-    }
+    PacketValidator::validateParams(packetHandler, ui->verticalLayout_packet);
+    PacketSaver::savePacket(packetHandler);
 }
 
 // Packet scenarios
@@ -439,6 +337,7 @@ void MainWindow::on_pushButton_clicked()
     ScenariosWindow *sw = new ScenariosWindow();
     sw->m = this;
     sw->show();
+    sw->changeLanguage();
     this->hide();
 }
 

@@ -12,7 +12,7 @@ class CPacketHandler: public QWidget
 public:
     CPacketHandler(QWidget *parent = nullptr);
     QString formatProtos();
-    int sendPacket(QString filename);
+    int sendPacket();
 
     QString packet;
     QString filename_;
@@ -21,11 +21,13 @@ public:
     QString Ifc;
     int packetCount;
     int period;
+
 private:
     QProcess *process_;
     QMessageBox *messageBox_;
     QProgressDialog *progressDialog_;
     int progress;
+
 private slots:
     void onReadyReadStandardOutput();
     void onReadyReadStandardError();

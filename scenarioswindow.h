@@ -22,6 +22,8 @@ public:
     void showScenario(Scenario *scenario);
     void hideScenario(Scenario *scenario);
 
+    void changeLanguage();
+
     MainWindow *m;
     Scenario *activeScenario;
 
@@ -32,6 +34,10 @@ private slots:
     void on_pushButton_5_clicked();
 
     void on_pushButton_4_clicked();
+
+    void on_pushButton_UA_clicked();
+
+    void on_pushButton_EN_clicked();
 
 private:
     Ui::ScenariosWindow *ui;

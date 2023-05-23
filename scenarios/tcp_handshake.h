@@ -47,7 +47,7 @@ public:
             arguments += " " + ARGS_SRCIP(srcIP.text());
 
         qDebug() << arguments;
-//        pythonScript.start("python3", QStringList() << tempFile.fileName() << ARGS_REQUIRED(dstIP.text(), srcPort.text(), dstPort.text(), Ifc));
+
         pythonScript.startCommand("python3 " + tempFile.fileName() + " " + arguments);
         if (pythonScript.waitForFinished())
         {

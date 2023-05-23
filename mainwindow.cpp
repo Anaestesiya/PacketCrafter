@@ -16,6 +16,7 @@
 
 #include "savefiledialog.h"
 #include "scenarioswindow.h"
+#include "clogger.h"
 
 #include <QComboBox>
 
@@ -25,7 +26,9 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    translator.load("PacketCrafter_uk_UA");
+    int res = translator.load("PacketCrafter_uk_UA");
+    if (res < 0)
+        LOG_ERROR("Failed to load translator");
     qApp->installTranslator(&translator);
 
     layer_groups[0] = (QGridLayout *)(ui->groupBox_application->layout());
@@ -51,18 +54,19 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->spinBox_period->setButtonSymbols(QAbstractSpinBox::NoButtons);
     ui->spinBox_period->setRange(1,10);
-
+    LOG_INFO("Init Application successfully");
 }
 
 MainWindow::~MainWindow()
 {
+    LOG_INFO("End App");
     delete ui;
 }
 
 
 void MainWindow::on_pushButton_set_UA_clicked()
 {
-    qDebug() << "UA" << "\n";
+    LOG_INFO("Change language to UA");
     // toggle effect
     ui->pushButton_set_UA->setEnabled(false);
     ui->pushButton_set_EN->setEnabled(true);
@@ -77,7 +81,7 @@ void MainWindow::on_pushButton_set_UA_clicked()
 
 void MainWindow::on_pushButton_set_EN_clicked()
 {
-    qDebug() << "EN" << "\n";
+    LOG_INFO("Change language to EN");
 
     // toggle effect
     ui->pushButton_set_EN->setEnabled(false);
@@ -91,6 +95,8 @@ void MainWindow::on_pushButton_set_EN_clicked()
 
 void MainWindow::addProtoAction(CProtocol *proto, CFields *fields)
 {
+    LOG_INFO("%s is added", proto->text().toStdString().c_str());
+    qDebug() << proto->text().toStdString().c_str();
     // Init widget
     CProtocol *packetproto = new CProtocol();
     packetproto->fields = fields;
@@ -110,6 +116,7 @@ void MainWindow::addProtoAction(CProtocol *proto, CFields *fields)
         for (int i = 0; i < grp->count(); ++i)
         {
             static_cast<CProtocol *>(grp->itemAt(i)->widget())->setEnabled(false);
+            LOG_INFO("%s is not functional anymore", static_cast<CProtocol *>(grp->itemAt(i)->widget())->text().toStdString().c_str());
         }
     }
     else
@@ -119,10 +126,12 @@ void MainWindow::addProtoAction(CProtocol *proto, CFields *fields)
             if (proto->text().contains("v6") && !static_cast<CProtocol *>(grp->itemAt(i)->widget())->text().contains("v6"))
             {
                 static_cast<CProtocol *>(grp->itemAt(i)->widget())->setEnabled(false);
+                LOG_INFO("%s is not functional anymore", static_cast<CProtocol *>(grp->itemAt(i)->widget())->text().toStdString().c_str());
             }
             else if (!proto->text().contains("v6") && static_cast<CProtocol *>(grp->itemAt(i)->widget())->text().contains("v6"))
             {
                 static_cast<CProtocol *>(grp->itemAt(i)->widget())->setEnabled(false);
+                LOG_INFO("%s is not functional anymore", static_cast<CProtocol *>(grp->itemAt(i)->widget())->text().toStdString().c_str());
             }
             proto->setEnabled(false);
         }
@@ -140,8 +149,11 @@ void MainWindow::addProtoAction(CProtocol *proto, CFields *fields)
     }
 
     ui->verticalLayout_packet->insertWidget(index, packetproto);
-    if (packetproto->fields)
+    if (packetproto->fields) {
         ui->verticalLayout_fields->insertWidget(index - 1, &packetproto->fields->grpbox);
+        LOG_INFO("Add headers for %s", packetproto->fields->grpbox.title().toStdString().c_str());
+    }
+
     ui->verticalLayout_packet->setAlignment(Qt::AlignCenter);
 
     packetproto->show();
@@ -153,13 +165,14 @@ void MainWindow::addProtoAction(CProtocol *proto, CFields *fields)
 // Remove widget from Packet layout when clicked
 void MainWindow::clickedPacketProto()
 {
-    qDebug() << ((CProtocol *)sender())->layer;
+    LOG_INFO("Delete %s of layer %s",((CProtocol *)sender())->text().toStdString().c_str(), ((CProtocol *)sender())->layer);
     QGridLayout *grp = layer_groups[((CProtocol *)sender())->layer - 1];
     if (((CProtocol *)sender())->text().contains("ICMP"))
         grp = layer_groups[((CProtocol *)sender())->layer];
     for (int i = 0; i < grp->count(); ++i)
     {
         static_cast<CProtocol *>(grp->itemAt(i)->widget())->setEnabled(true);
+        LOG_INFO("%s is back to enabled", static_cast<CProtocol *>(grp->itemAt(i)->widget())->text().toStdString().c_str());
     }
 
     ((CProtocol*)sender())->hide();
@@ -172,6 +185,7 @@ void MainWindow::clickedPacketProto()
         delete ((CProtocol *)sender())->fields;
     }
     delete sender();
+    LOG_DEBUG("Delete sender");
 }
 
 // Ethernet
@@ -267,6 +281,7 @@ void MainWindow::on_pushButton_17_clicked()
 
 void MainWindow::validateParams()
 {
+    LOG_DEBUG("In %s", __FUNCTION__);
     packetHandler.protoVector.clear();
     for (int i = 1; i < ui->verticalLayout_packet->count(); ++i)
     {
@@ -279,15 +294,19 @@ void MainWindow::validateParams()
 // send button
 void MainWindow::on_pushButton_2_clicked()
 {
+    LOG_DEBUG("In %s", __FUNCTION__);
+    LOG_INFO("Press send");
     QRegularExpression emptyRegex("^\\s*$"); // Regular expression to check for empty input
     QPalette palette = ui->lineEdit_Ifc->palette();
     if (ui->lineEdit_Ifc->text().isEmpty() || ui->lineEdit_Ifc->text().contains(emptyRegex)) {
         // Input is empty or contains only whitespace characters
         palette.setColor(QPalette::Base, Qt::red); // Set the background color to red
         ui->lineEdit_Ifc->setPalette(palette);
+        LOG_WARNING("Interface field is incorrect");
         return;
     } else {
         // Input is not empty
+        LOG_DEBUG("Interface is OK");
         palette.setColor(QPalette::Base, Qt::white); // Set the background color to white
     }
     ui->lineEdit_Ifc->setPalette(palette);
@@ -296,7 +315,10 @@ void MainWindow::on_pushButton_2_clicked()
 
     QString scriptname = packetHandler.formatProtos();
     if (scriptname == "")
+    {
+        LOG_ERROR("Script name is empty");
         return;
+    }
     packetHandler.Ifc = ui->lineEdit_Ifc->text();
     packetHandler.period = ui->spinBox_period->value();
     packetHandler.packetCount = ui->spinBox_count->value();
@@ -314,13 +336,12 @@ void MainWindow::on_pushButton_2_clicked()
 
 // 5. Open and parse file
 // 7. Add logging
-// 8. Add Cloud sync
-// 10. Add scenarios
 
 
 // Save packets
 void MainWindow::on_pushButton_3_clicked()
 {
+    LOG_DEBUG(__FUNCTION__);
     validateParams();
     QString scriptname = packetHandler.formatProtos();
     QString packet = packetHandler.packet;
@@ -414,9 +435,20 @@ void MainWindow::on_pushButton_3_clicked()
 // Packet scenarios
 void MainWindow::on_pushButton_clicked()
 {
+    LOG_DEBUG(__FUNCTION__);
     ScenariosWindow *sw = new ScenariosWindow();
     sw->m = this;
     sw->show();
     this->hide();
+}
+
+// log button
+void MainWindow::on_pushButton_18_clicked()
+{
+    LOG_DEBUG(__FUNCTION__);
+    FileDisplayer fileDisplayer;
+
+    fileDisplayer.exec();
+
 }
 

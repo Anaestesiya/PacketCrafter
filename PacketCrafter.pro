@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     CProtocol.cpp \
+    clogger.cpp \
     main.cpp \
     mainwindow.cpp \
     packethandler.cpp \
@@ -29,6 +30,7 @@ SOURCES += \
 
 HEADERS += \
     CProtocol.h \
+    clogger.h \
     mainwindow.h \
     packethandler.h \
     protoFields/arp.h \

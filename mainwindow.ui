@@ -113,6 +113,13 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_18">
+        <property name="text">
+         <string>Check logs</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </item>
     <item>
@@ -427,7 +434,7 @@
      </layout>
     </item>
     <item>
-     <widget class="QFrame" name="">
+     <widget class="QFrame" name="frame">
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>

@@ -14,33 +14,54 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="29"/>
-        <source>Verify Packet</source>
-        <translation>Перевірити пакет</translation>
+        <source>Packet Scenarios</source>
+        <oldsource>Verify Packet</oldsource>
+        <translation>Сценарії пакетів</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="36"/>
+        <location filename="mainwindow.ui" line="460"/>
+        <source>Source Interface</source>
+        <translation>Вихідний інтерфейс</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="490"/>
+        <source>Packets count</source>
+        <translation>Кількість пакетів</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="511"/>
+        <source>Packets in a sec</source>
+        <translation>Пакетів в секунду</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="523"/>
         <source>Send Packet</source>
         <translation>Відправити пакет</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="43"/>
+        <location filename="mainwindow.ui" line="36"/>
         <source>Save Packet</source>
         <translation>Зберігти пакет</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="50"/>
+        <location filename="mainwindow.ui" line="43"/>
         <source>Open</source>
         <translation>Відкрити</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="88"/>
+        <location filename="mainwindow.ui" line="81"/>
         <source>UA</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="113"/>
+        <location filename="mainwindow.ui" line="106"/>
         <source>EN</source>
         <translation></translation>
+    </message>
+    <message>
+        <location filename="mainwindow.ui" line="119"/>
+        <source>Check logs</source>
+        <translation>Відкрити журнали</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="145"/>
@@ -88,12 +109,12 @@
         <translation>Інтернет рівень</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="266"/>
+        <location filename="mainwindow.ui" line="279"/>
         <source>ICMP</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="253"/>
+        <location filename="mainwindow.ui" line="266"/>
         <source>IPv4</source>
         <oldsource>IP</oldsource>
         <translation></translation>
@@ -109,7 +130,7 @@
         <translation>Канальний рівень</translation>
     </message>
     <message>
-        <location filename="mainwindow.ui" line="279"/>
+        <location filename="mainwindow.ui" line="253"/>
         <source>IPv6</source>
         <translation></translation>
     </message>
@@ -125,13 +146,62 @@
     </message>
     <message>
         <location filename="mainwindow.ui" line="337"/>
-        <source>Physical leyer</source>
+        <source>Physical layer</source>
+        <oldsource>Physical leyer</oldsource>
         <translation>Фізичний рівень</translation>
     </message>
     <message>
         <location filename="mainwindow.ui" line="349"/>
         <source>Ethernet</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>ScenariosWindow</name>
+    <message>
+        <location filename="scenarioswindow.ui" line="14"/>
+        <source>MainWindow</source>
+        <translation>Будівельник пакетів</translation>
+    </message>
+    <message>
+        <location filename="scenarioswindow.ui" line="26"/>
+        <source>Back to Crafter</source>
+        <translation>Назад до крафтера</translation>
+    </message>
+    <message>
+        <location filename="scenarioswindow.ui" line="64"/>
+        <source>UA</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="scenarioswindow.ui" line="83"/>
+        <source>EN</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="scenarioswindow.ui" line="115"/>
+        <source>Choose scenario</source>
+        <translation>Вибір сценарій</translation>
+    </message>
+    <message>
+        <location filename="scenarioswindow.ui" line="137"/>
+        <source>TCP Handshake</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="scenarioswindow.ui" line="156"/>
+        <source>DHCP Discovery</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="scenarioswindow.ui" line="240"/>
+        <source>Source Interface</source>
+        <translation>Вихідний інтерфейс</translation>
+    </message>
+    <message>
+        <location filename="scenarioswindow.ui" line="265"/>
+        <source>Start Scenario</source>
+        <translation>Почати сценарій</translation>
     </message>
 </context>
 </TS>

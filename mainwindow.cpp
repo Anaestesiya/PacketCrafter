@@ -29,10 +29,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-//    int res = translator.load("PacketCrafter_uk_UA");
-//    if (res < 0)
-//        LOG_ERROR("Failed to load translator");
-//    qApp->installTranslator(&translator);
     ui->pushButton_set_EN->setEnabled(false);
     ui->pushButton_set_UA->setEnabled(true);
     changeLanguage();
@@ -184,7 +180,9 @@ void MainWindow::addProtoAction(CProtocol *proto, CFields *fields)
 // Remove widget from Packet layout when clicked
 void MainWindow::clickedPacketProto()
 {
-    LOG_INFO("Delete %s of layer %s",((CProtocol *)sender())->text().toStdString().c_str(), ((CProtocol *)sender())->layer);
+    QString tmp = ((CProtocol *)sender())->text();
+    int tmp2 = ((CProtocol *)sender())->layer;
+    LOG_INFO("Delete %s of layer %d", tmp.toStdString().c_str(), ((CProtocol *)sender())->layer);
     QGridLayout *grp = layer_groups[((CProtocol *)sender())->layer - 1];
     if (((CProtocol *)sender())->text().contains("ICMP"))
         grp = layer_groups[((CProtocol *)sender())->layer];
@@ -320,7 +318,6 @@ void MainWindow::on_pushButton_2_clicked()
 // 6. Auto open wireshark to look for traffic ?
 
 // 5. Open and parse file
-// 7. Add logging
 
 
 // Save packets

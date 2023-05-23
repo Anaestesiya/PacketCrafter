@@ -3,19 +3,35 @@
 
 #include "protoFields/cfields.h"
 
-class CPacketHandler
+#include <QProcess>
+#include <QMessageBox>
+#include <QProgressDialog>
+
+class CPacketHandler: public QWidget
 {
 public:
-    CPacketHandler();
+    CPacketHandler(QWidget *parent = nullptr);
     QString formatProtos();
     int sendPacket(QString filename);
 
     QString packet;
+    QString filename_;
 
     QList<CFields *> protoVector;
     QString Ifc;
     int packetCount;
     int period;
+private:
+    QProcess *process_;
+    QMessageBox *messageBox_;
+    QProgressDialog *progressDialog_;
+    int progress;
+private slots:
+    void onReadyReadStandardOutput();
+    void onReadyReadStandardError();
+    void onProcessFinished();
+    void showProgressDialog();
+    void onProgressDialogCanceled();
 };
 
 #endif // CPACKETHANDLER_H

@@ -72,9 +72,7 @@ int CPacketHandler::sendPacket(QString filename)
     if (process_ != nullptr)
         delete process_;
     process_ = new QProcess(this);
-    if (messageBox_ != nullptr)
-        delete messageBox_;
-    messageBox_ = new QMessageBox(this);
+
     if (progressDialog_ != nullptr)
         delete progressDialog_;
     progressDialog_ = new QProgressDialog(this);
@@ -108,10 +106,7 @@ void CPacketHandler::onReadyReadStandardOutput()
         progressDialog_->setValue(progress);
         return;
     }
-    messageBox_->setText(QString(outputData));
-    // Show the messageBox_ if not already shown
-    if (!messageBox_->isVisible())
-        messageBox_->show();
+    QMessageBox::information(nullptr, "Success",QString(outputData));
     LOG_INFO("%s",outputData.toStdString().c_str());
 }
 
@@ -121,11 +116,9 @@ void CPacketHandler::onReadyReadStandardError()
     // Update the content of the messageBox_
     if (errorData.isEmpty())
         return;
-    messageBox_->setText(QString(errorData));
-    // Show the messageBox_ if not already shown
-    if (!messageBox_->isVisible())
-        messageBox_->show();
+    QMessageBox::critical(nullptr, "Error",QString(errorData));
     LOG_ERROR("%s",errorData.toStdString().c_str());
+    progressDialog_->hide();
 }
 void CPacketHandler::onProcessFinished()
 {

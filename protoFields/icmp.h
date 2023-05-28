@@ -11,7 +11,7 @@
 
 #include "cfields.h"
 
-#define ICMP_FORMAT "icmp=ICMP("
+#define ICMP_FORMAT "ICMP=ICMP("
 
 class Cicmp : public CFields
 {
@@ -47,6 +47,7 @@ public:
 
         return format;
     }
+    static QString name;
 };
 
 

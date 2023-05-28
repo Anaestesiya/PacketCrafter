@@ -5,7 +5,7 @@
 #include <QSizePolicy>
 
 // How to fill with default values ?
-
+QString CEtherFields::name = "Ethernet";
 CEtherFields::CEtherFields(QVBoxLayout *parentFrame) : CFields()
 {
     QGridLayout * grd = new QGridLayout();

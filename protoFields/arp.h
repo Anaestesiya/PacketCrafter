@@ -10,7 +10,7 @@
 
 #include "cfields.h"
 
-#define ARP_FORMAT "arp=ARP()"
+#define ARP_FORMAT "ARP=ARP()"
 
 const QStringList opCodes =
 {

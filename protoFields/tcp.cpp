@@ -1,4 +1,5 @@
 #include "tcp.h"
+QString CTCP::name = "TCP";
 
 CTCP::CTCP(QVBoxLayout *parentFrame) : CFields()
 {

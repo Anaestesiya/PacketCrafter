@@ -9,7 +9,7 @@
 
 #include "cfields.h"
 
-#define HTTP_FORMAT "http=HTTP()/HTTPRequest(Method='%s', Path='%s', Http_Version='%s', Host='%s', Accept='%s', Cache_Control='%s')"
+#define HTTP_FORMAT "HTTP=HTTP()/HTTPRequest(Method='%s', Path='%s', Http_Version='%s', Host='%s', Accept='%s', Cache_Control='%s')"
 
 class Chttp : public CFields
 {

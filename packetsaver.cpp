@@ -97,7 +97,5 @@ void PacketSaver::savePacket(CPacketHandler &packetHandler)
 
     if (dialog.exec() == QDialog::Accepted)
     {
-        // Dialog was accepted, continue with the chosen file path
-        // Add any additional code here if needed
     }
 }

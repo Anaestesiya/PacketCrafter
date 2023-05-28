@@ -348,3 +348,94 @@ void MainWindow::on_pushButton_18_clicked()
 
 }
 
+#include <QFileDialog>
+#include <QFile>
+#include <QTextStream>
+#include <QStringList>
+#include <QDebug>
+
+void MainWindow::on_pushButton_4_clicked()
+{
+
+
+    // Open a file using a dialog window
+    QString filePath = QFileDialog::getOpenFileName(nullptr, "Open File", "", "All Files (*)");
+    if (filePath.isEmpty())
+    {
+        qDebug() << "No file selected.";
+        return;
+    }
+
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+    {
+        qDebug() << "Failed to open the file.";
+        return;
+    }
+
+    QTextStream in(&file);
+    QStringList lines;
+
+    // Read the file line by line
+    while (!in.atEnd())
+    {
+        QString line = in.readLine();
+        lines.append(line);
+    }
+
+    file.close();
+
+    // Check if the file format matches the expected format
+    if (lines.size() < 4 || !lines[0].startsWith("#!/usr/bin/python3") || !lines[1].startsWith("from scapy.all import *"))
+    {
+        qDebug() << "Invalid file format.";
+        return;
+    }
+
+    // Remove the first two lines
+    lines.removeFirst();
+    lines.removeFirst();
+
+    // Define a regular expression pattern to match variable assignments
+    QRegularExpression pattern("(\\w+)\\s*=\\s*(.*)");
+
+    QHash<QString, QString> variables;
+
+    // Process each line
+    for (const QString& line : lines)
+    {
+        // Check if the line matches the variable assignment pattern
+        QRegularExpressionMatch match = pattern.match(line);
+        if (match.hasMatch())
+        {
+            // Extract the variable name and parameter
+            QString variableName = match.captured(1);
+            QString parameter = match.captured(2).trimmed();
+
+            // Save the variable and its parameter in the hash
+            variables[variableName] = parameter;
+        }
+
+    }
+
+    // Print the parsed variables and parameters
+    QHashIterator<QString, QString> iterator(variables);
+    while (iterator.hasNext())
+    {
+        iterator.next();
+        qDebug() << iterator.key() << ": " << iterator.value();
+        if (iterator.key() == "Ethernet")
+        {
+            addProtoAction(ui->pushButton_14, new CEtherFields(ui->verticalLayout_fields));
+        }
+        else if (iterator.key() == "IPv4")
+        {
+            addProtoAction(ui->pushButton_10, new CIpv4fields(ui->verticalLayout_fields));
+        } else if (iterator.key() == "ICMP")
+        {
+            addProtoAction(ui->pushButton_12, new Cicmp(ui->verticalLayout_fields));
+        }
+    }
+
+}
+

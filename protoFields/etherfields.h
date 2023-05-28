@@ -9,7 +9,7 @@
 
 #include "cfields.h"
 
-#define ETHER_FORMAT "ether=Ether("
+#define ETHER_FORMAT "Ethernet=Ether("
 // src='%s', dst='%s', type=%d
 class CEtherFields : public CFields
 {
@@ -30,6 +30,7 @@ public:
         return format;
     }
     ~CEtherFields(){}
+    static QString name;
 };
 
 #endif // CETHERFIELDS_H

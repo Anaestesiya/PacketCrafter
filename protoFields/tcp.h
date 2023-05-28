@@ -10,7 +10,7 @@
 
 #include "cfields.h"
 
-#define TCP_FORMAT "tcp=TCP("
+#define TCP_FORMAT "TCP=TCP("
 
 class CTCP : public CFields
 {
@@ -31,6 +31,7 @@ public:
     }
 
     CTCP(QVBoxLayout *parentFrame);
+    static QString name;
 };
 
 #endif // CTCP_H

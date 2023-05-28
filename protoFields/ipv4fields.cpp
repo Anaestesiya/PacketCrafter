@@ -1,5 +1,7 @@
 #include "ipv4fields.h"
 
+QString CIpv4fields::name = "IPv4";
+
 CIpv4fields::CIpv4fields(QVBoxLayout *parentFrame) : CFields(),
     ipv4AddressRegex("^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$")
 {
@@ -30,3 +32,4 @@ CIpv4fields::CIpv4fields(QVBoxLayout *parentFrame) : CFields(),
 
     grpbox.show();
 }
+

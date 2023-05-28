@@ -10,7 +10,7 @@
 
 #include "cfields.h"
 
-#define IPV4_FORMAT "ip=IP("
+#define IPV4_FORMAT "IPv4=IP("
 
 class CIpv4fields : public CFields
 {
@@ -70,6 +70,7 @@ public:
 
     CIpv4fields(QVBoxLayout *parentFrame);
     ~CIpv4fields(){}
+    static QString name;
 };
 
 #endif // IPV4FIELDS_H

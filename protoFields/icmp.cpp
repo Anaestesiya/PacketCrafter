@@ -1,7 +1,7 @@
 #include "icmp.h"
 
 QHash<QString, int> *Cicmp::icmptypes = new QHash<QString, int>();
-
+QString Cicmp::name = "ICMP";
 Cicmp::Cicmp(QVBoxLayout *parentFrame) : CFields()
 {
     QGridLayout * grd = new QGridLayout();

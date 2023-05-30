@@ -8,7 +8,7 @@
 #include <QPushButton>
 #include <QTimer>
 
-#define FILENAME_FORMAT ("/tmp/script" + QString::number(QDateTime::currentMSecsSinceEpoch()))
+#define FILENAME_FORMAT ("/tmp/PacketCrafter/scripts/script" + QString::number(QDateTime::currentMSecsSinceEpoch()))
 
 CPacketHandler::CPacketHandler(QWidget *parent) :
     Ifc("lo"),

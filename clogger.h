@@ -7,7 +7,7 @@
 #include <ctime>
 #include <sstream>
 
-#define LOG_FILE_NAME "message"
+#define LOG_FILE_NAME "/tmp/PacketCrafter/logs/message"
 #define MAX_FILE_SIZE 1024*1024
 #define MAX_BACKUP_FILES 5
 

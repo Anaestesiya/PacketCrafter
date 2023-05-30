@@ -11,13 +11,13 @@ QTranslator *LanguageController::translator = new QTranslator();
 
 void LanguageController::changeToEN()
 {
-    translator->load("PacketCrafter_en_US");
+    translator->load("/etc/PacketCrafter/PacketCrafter_en_US");
     qApp->installTranslator(translator);
 }
 
 void LanguageController::changeToUA()
 {
-    translator->load("PacketCrafter_uk_UA");
+    translator->load("/etc/PacketCrafter/PacketCrafter_uk_UA");
     qApp->installTranslator(translator);
 }
 

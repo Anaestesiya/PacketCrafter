@@ -7,23 +7,26 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QVBoxLayout>
+#include <QSpinBox>
 
 #include "cfields.h"
 
-#define UDP_FORMAT "udp=UDP()"
+#define UDP_FORMAT "udp=UDP("
 
 class CUDP : public CFields
 {
 public:
     CUDP(QVBoxLayout *parentFrame);
+    QSpinBox srcPort;
+    QSpinBox dstPort;
 
     QString format() override
     {
         QString format = UDP_FORMAT;
-//        if (srcMac.text() != "")
-//            format += "src=" + srcMac.text();
-//        if (dstMac.text() != "")
-//            format += ", dst=" + dstMac.text();
+        if (srcPort.value())
+            format += "sport=" + QString::number(srcPort.value());
+        if (dstPort.value())
+            format += ", dport=" + QString::number(dstPort.value());
         format += ")";
 
         return format;

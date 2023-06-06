@@ -20,6 +20,7 @@ SOURCES += \
     protoFields/arp.cpp \
     protoFields/cfields.cpp \
     protoFields/chttp.cpp \
+    protoFields/dhcp.cpp \
     protoFields/etherfields.cpp \
     protoFields/icmp.cpp \
     protoFields/ipv4fields.cpp \
@@ -27,6 +28,7 @@ SOURCES += \
     protoFields/tcp.cpp \
     protoFields/udp.cpp \
     savefiledialog.cpp \
+    scenarios/dhcp_discovery.cpp \
     scenarios/scenario.cpp \
     scenarios/tcp_handshake.cpp \
     scenarioswindow.cpp \
@@ -42,6 +44,7 @@ HEADERS += \
     protoFields/arp.h \
     protoFields/cfields.h \
     protoFields/chttp.h \
+    protoFields/dhcp.h \
     protoFields/etherfields.h \
     protoFields/icmp.h \
     protoFields/ipv4fields.h \
@@ -49,6 +52,7 @@ HEADERS += \
     protoFields/tcp.h \
     protoFields/udp.h \
     savefiledialog.h \
+    scenarios/dhcp_discovery.h \
     scenarios/scenario.h \
     scenarios/tcp_handshake.h \
     scenarioswindow.h \

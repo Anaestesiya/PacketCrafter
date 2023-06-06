@@ -13,6 +13,7 @@
 #include "protoFields/tcp.h"
 #include "protoFields/udp.h"
 #include "protoFields/arp.h"
+#include "protoFields/dhcp.h"
 
 #include "savefiledialog.h"
 #include "scenarioswindow.h"
@@ -27,6 +28,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+    createDirectory();
+
     ui->setupUi(this);
 
     ui->pushButton_set_EN->setEnabled(false);
@@ -281,7 +284,7 @@ void MainWindow::on_pushButton_6_clicked()
 // DHCP
 void MainWindow::on_pushButton_17_clicked()
 {
-    addProtoAction(ui->pushButton_17);
+    addProtoAction(ui->pushButton_17, new CDHCP(ui->verticalLayout_fields));
 }
 
 // send button
@@ -439,3 +442,43 @@ void MainWindow::on_pushButton_4_clicked()
 
 }
 
+
+#include <QDir>
+
+void MainWindow::createDirectory()
+{
+    QString dirPath = "/tmp/PacketCrafter";
+
+    QDir dir;
+    if (!dir.exists(dirPath)) {
+        if (dir.mkpath(dirPath)) {
+            qDebug() << "Directory created successfully.";
+        } else {
+            qDebug() << "Failed to create directory.";
+        }
+    } else {
+        qDebug() << "Directory already exists.";
+    }
+
+    dirPath = "/tmp/PacketCrafter/logs";
+    if (!dir.exists(dirPath)) {
+        if (dir.mkpath(dirPath)) {
+            qDebug() << "Directory created successfully.";
+        } else {
+            qDebug() << "Failed to create directory.";
+        }
+    } else {
+        qDebug() << "Directory already exists.";
+    }
+
+    dirPath = "/tmp/PacketCrafter/scripts";
+    if (!dir.exists(dirPath)) {
+        if (dir.mkpath(dirPath)) {
+            qDebug() << "Directory created successfully.";
+        } else {
+            qDebug() << "Failed to create directory.";
+        }
+    } else {
+        qDebug() << "Directory already exists.";
+    }
+}

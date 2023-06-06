@@ -39,6 +39,8 @@ private slots:
 
     void on_pushButton_EN_clicked();
 
+    void on_pushButton_6_clicked();
+
 private:
     Ui::ScenariosWindow *ui;
 };

@@ -24,6 +24,7 @@ public:
 
     void addProtoAction(CProtocol *proto, CFields *fields = nullptr);
     void changeLanguage();
+    void createDirectory();
 
     CPacketHandler packetHandler;
 

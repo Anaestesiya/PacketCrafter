@@ -6,6 +6,8 @@
 #include "scenarios/tcp_handshake.h"
 #include "scenarios/scenario.h"
 
+#include <scenarios/dhcp_discovery.h>
+
 ScenariosWindow::ScenariosWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::ScenariosWindow)
@@ -120,5 +122,19 @@ void ScenariosWindow::on_pushButton_EN_clicked()
     changeLanguage();
 
     ui->retranslateUi(this);
+}
+
+
+void ScenariosWindow::on_pushButton_6_clicked()
+{
+    if (activeScenario != nullptr)
+    {
+        QPushButton *tmp = activeScenario->srcButton;
+        hideScenario(activeScenario);
+        if (tmp == ui->pushButton_6)
+            return;
+    }
+
+    showScenario(new DHCP_Discovery(ui->verticalLayout_fields, ui->pushButton_6));
 }
 

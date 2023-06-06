@@ -1,8 +1,10 @@
 <RCC>
     <qresource prefix="/images">
         <file>Tcp-handshake.svg.png</file>
+        <file>DHCP-Discovery.svg.png</file>
     </qresource>
-    <qresource>
+    <qresource prefix="/">
         <file>scenarios/python_scripts/tcp_handhsake.py</file>
+        <file>scenarios/python_scripts/dhcp.py</file>
     </qresource>
 </RCC>

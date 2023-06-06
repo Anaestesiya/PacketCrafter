@@ -14,6 +14,7 @@
 #include "protoFields/udp.h"
 #include "protoFields/arp.h"
 #include "protoFields/dhcp.h"
+#include "protoFields/dns.h"
 
 #include "savefiledialog.h"
 #include "scenarioswindow.h"
@@ -278,7 +279,7 @@ void MainWindow::on_pushButton_7_clicked()
 // DNS
 void MainWindow::on_pushButton_6_clicked()
 {
-    addProtoAction(ui->pushButton_6);
+    addProtoAction(ui->pushButton_6, new CDNS(ui->verticalLayout_fields));
 }
 
 // DHCP

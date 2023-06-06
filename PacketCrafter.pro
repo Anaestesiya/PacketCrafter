@@ -21,6 +21,7 @@ SOURCES += \
     protoFields/cfields.cpp \
     protoFields/chttp.cpp \
     protoFields/dhcp.cpp \
+    protoFields/dns.cpp \
     protoFields/etherfields.cpp \
     protoFields/icmp.cpp \
     protoFields/ipv4fields.cpp \
@@ -45,6 +46,7 @@ HEADERS += \
     protoFields/cfields.h \
     protoFields/chttp.h \
     protoFields/dhcp.h \
+    protoFields/dns.h \
     protoFields/etherfields.h \
     protoFields/icmp.h \
     protoFields/ipv4fields.h \

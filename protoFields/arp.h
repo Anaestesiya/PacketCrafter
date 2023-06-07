@@ -10,7 +10,7 @@
 
 #include "cfields.h"
 
-#define ARP_FORMAT "ARP=ARP()"
+#define ARP_FORMAT "ARP=ARP(pdst='"
 
 const QStringList opCodes =
 {
@@ -29,14 +29,24 @@ class CARP : public CFields
 {
 public:
     QComboBox opCode;
-    QLineEdit hwsrc;
-    QLineEdit hwdst;
+//    QLineEdit hwsrc;
+//    QLineEdit hwdst;
     QLineEdit ipsrc;
     QLineEdit ipdst;
 
     QString format() override
     {
-        return QString(ARP_FORMAT);
+        QString format = ARP_FORMAT;
+        format += ipdst.text();
+        format += "'";
+        if (ipsrc.text() != "")
+        {
+            format += ",psrc='";
+            format += ipsrc.text();
+            format += "'";
+        }
+        format += ")";
+        return format;
     }
 
     CARP(QVBoxLayout *parent);
